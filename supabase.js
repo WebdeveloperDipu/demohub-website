@@ -23,3 +23,6 @@ window.supabaseConnectionTest = async function () {
     console.error("Connection failed:", err.message);
   }
 };
+window.addEventListener("load", function () {
+  window.supabaseConnectionTest();
+});
