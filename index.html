@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DemoHub — Learning Project</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+    <section class="auth-card" id="loginView">
+      <div class="brand-mark">D</div>
+      <p class="eyebrow">LEARNING PROJECT</p>
+      <h1>DemoHub-এ স্বাগতম</h1>
+      <p class="muted">নিজের ডেমো অ্যাকাউন্টে প্রবেশ করো। এখানে কোনো বাস্তব টাকা লেনদেন হয় না।</p>
+      <form id="loginForm">
+        <label for="username">নাম</label>
+        <input id="username" name="username" placeholder="তোমার নাম লিখো" autocomplete="name" required maxlength="40">
+        <label for="role">কোন ভিউ খুলবে?</label>
+        <select id="role" name="role">
+          <option value="user">User Dashboard</option>
+          <option value="admin">Admin Demo Panel</option>
+        </select>
+        <button class="primary full" type="submit">ডেমোতে প্রবেশ করো</button>
+      </form>
+      <div class="notice"><strong>Demo only:</strong> লগইনটি শুধু ব্রাউজারের মধ্যে কাজ করে; এটি নিরাপদ বাস্তব authentication নয়।</div>
+    </section>
+
+    <section id="dashboardView" class="hidden">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="DemoHub home"><span class="brand-mark small">D</span> DemoHub</a>
+        <div class="top-actions"><span id="rolePill" class="pill">USER DEMO</span><button id="logoutBtn" class="ghost">লগআউট</button></div>
+      </header>
+      <div class="layout">
+        <aside class="sidebar">
+          <p class="side-label">MENU</p>
+          <button class="nav-item active" data-page="overview">◫ <span>Overview</span></button>
+          <button class="nav-item" data-page="tasks">✓ <span>Tasks</span></button>
+          <button class="nav-item" data-page="wallet">▣ <span>Demo Wallet</span></button>
+          <button class="nav-item admin-only hidden" data-page="admin">⚙ <span>Admin Panel</span></button>
+          <div class="sidebar-note"><span class="dot"></span> Learning mode is on</div>
+        </aside>
+        <section class="content">
+          <div class="page" id="overviewPage">
+            <p class="eyebrow">YOUR WORKSPACE</p>
+            <h1 id="helloTitle">হ্যালো!</h1>
+            <p class="muted">এটি একটি সহজ ডেমো ড্যাশবোর্ড। ফিচারগুলো JavaScript দিয়ে চালানো হয়েছে।</p>
+            <div class="stats">
+              <article class="stat-card"><span class="stat-icon purple">✓</span><p class="stat-label">সম্পন্ন টাস্ক</p><h2 id="completedCount">0</h2><span class="stat-foot">তোমার অগ্রগতি</span></article>
+              <article class="stat-card"><span class="stat-icon green">▣</span><p class="stat-label">ডেমো ব্যালেন্স</p><h2 id="balanceValue">৳ 1,000</h2><span class="stat-foot">বাস্তব অর্থ নয়</span></article>
+              <article class="stat-card"><span class="stat-icon orange">◎</span><p class="stat-label">উপলভ্য টাস্ক</p><h2 id="availableCount">3</h2><span class="stat-foot">শেখার অনুশীলন</span></article>
+            </div>
+            <article class="panel welcome-panel">
+              <div><p class="eyebrow">QUICK START</p><h2>আজকের অনুশীলন</h2><p class="muted">Tasks পেজে গিয়ে একটি অনুশীলন সম্পন্ন করো। প্রতিটি কাজ একবারই সম্পন্ন করা যাবে।</p><button class="primary" data-goto="tasks">টাস্ক দেখো <span>→</span></button></div>
+              <div class="illustration" aria-hidden="true"><span>✓</span><i></i><i></i><i></i></div>
+            </article>
+            <p class="footer-note">DemoHub · HTML + CSS + JavaScript · শিক্ষামূলক প্রজেক্ট</p>
+          </div>
+
+          <div class="page hidden" id="tasksPage">
+            <p class="eyebrow">PRACTICE ZONE</p><h1>Tasks</h1>
+            <p class="muted">কাজ সম্পন্ন করলে শুধু ডেমো ব্যালেন্সে পয়েন্ট যোগ হবে।</p>
+            <div id="taskList" class="task-list"></div>
+          </div>
+
+          <div class="page hidden" id="walletPage">
+            <p class="eyebrow">SANDBOX ONLY</p><h1>Demo Wallet</h1>
+            <p class="muted">এখানে সব লেনদেন কাল্পনিক; কোনো deposit, payment বা withdrawal করা হয় না।</p>
+            <article class="wallet-card"><div><span class="wallet-label">DEMO BALANCE</span><h2 id="walletBalance">৳ 1,000</h2></div><span class="wallet-symbol">৳</span></article>
+            <article class="panel"><h2>ডেমো হিস্ট্রি</h2><div id="historyList" class="history-list"></div><button id="resetDemoBtn" class="secondary">ডেমো ডেটা রিসেট</button></article>
+          </div>
+
+          <div class="page hidden" id="adminPage">
+            <p class="eyebrow">ADMIN SANDBOX</p><h1>Admin Panel</h1>
+            <p class="muted">এটি কেবল UI অনুশীলনের জন্য। কোনো বাস্তব ব্যবহারকারী বা সার্ভার নিয়ন্ত্রণ করে না।</p>
+            <div class="stats">
+              <article class="stat-card"><p class="stat-label">এই ব্রাউজারে ডেমো ইউজার</p><h2 id="adminUserName">—</h2></article>
+              <article class="stat-card"><p class="stat-label">সম্পন্ন টাস্ক</p><h2 id="adminCompleted">0</h2></article>
+              <article class="stat-card"><p class="stat-label">ডেমো ব্যালেন্স</p><h2 id="adminBalance">৳ 1,000</h2></article>
+            </div>
+            <article class="panel"><h2>ডেমো কন্ট্রোল</h2><p class="muted">শুধু নিজের ব্রাউজারে ডেমো ব্যালেন্স পরিবর্তন করো।</p><div class="inline-form"><input id="adjustAmount" type="number" min="1" max="10000" placeholder="পয়েন্ট (যেমন 100)"><button id="adjustBtn" class="primary">+ পয়েন্ট যোগ</button></div><p id="adminMessage" class="form-message" aria-live="polite"></p></article>
+          </div>
+        </section>
+      </div>
+    </section>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
