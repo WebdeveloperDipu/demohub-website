@@ -91,7 +91,50 @@ async function restoreSession() {
   }
 }
 
-function openDash(){$(".hero").hidden=$("#auth").hidden=$("#products").hidden=$("#about").hidden=true;$("#dashboard").hidden=false;$("#dock").hidden=false;document.body.classList.add("docked");$("#dashName").textContent=$("#profileName").textContent=user.name;$("#profileId").textContent=user.id;$("#summaryUserId").textContent=user.id;$("#avatar").textContent=user.name[0].toUpperCase();time();renderCats();renderReports();renderAdmin();metrics();scrollTo({top:0,behavior:"smooth"});toast("ডেমো ড্যাশবোর্ড খোলা হয়েছে; বাস্তব লেনদেন নেই।")}function time(){let d=new Date();$("#bdtime").textContent="বাংলাদেশ সময়: "+d.toLocaleString("bn-BD",{timeZone:"Asia/Dhaka",dateStyle:"medium",timeStyle:"short"})}
+
+async function openDash() {
+  try {
+    const { data: profile, error } = await window.sb
+      .from("profiles")
+      .select("display_name, user_code, role")
+      .eq("id", user.id)
+      .single();
+
+    if (error) throw error;
+
+    user.name = profile.display_name || user.name;
+    user.user_code = profile.user_code;
+    user.role = profile.role;
+
+    $(".hero").hidden = true;
+    $("#auth").hidden = true;
+    $("#products").hidden = true;
+    $("#about").hidden = true;
+
+    $("#dashboard").hidden = false;
+    $("#dock").hidden = false;
+    document.body.classList.add("docked");
+
+    $("#dashName").textContent = user.name;
+    $("#profileName").textContent = user.name;
+    $("#profileId").textContent = user.user_code;
+    $("#summaryUserId").textContent = user.user_code;
+    $("#avatar").textContent = user.name[0].toUpperCase();
+
+    time();
+    renderCats();
+    renderReports();
+    renderAdmin();
+    metrics();
+
+    scrollTo({ top: 0, behavior: "smooth" });
+    toast("ড্যাশবোর্ড খোলা হয়েছে।");
+  } catch (err) {
+    console.error("Profile load error:", err);
+    toast("প্রোফাইল লোড হয়নি। Database ও Profile যাচাই করুন।");
+  }
+}
+function time(){let d=new Date();$("#bdtime").textContent="বাংলাদেশ সময়: "+d.toLocaleString("bn-BD",{timeZone:"Asia/Dhaka",dateStyle:"medium",timeStyle:"short"})}
 function metrics(){
   if($("#balance")) $("#balance").textContent="৳ "+bn(balance);
   if($("#profit")) $("#profit").textContent="৳ "+bn(profit);
