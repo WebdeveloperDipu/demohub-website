@@ -121,7 +121,21 @@ $("#logout").onclick = async () => {
     toast("Logout করা যায়নি। আবার চেষ্টা করুন।");
   }
 };
-;$$ ("[data-dock]").forEach(b=>b.onclick=()=>{let k=b.dataset.dock;$$ ("[data-dock]").forEach(x=>x.classList.toggle("active",x===b));if(k==="home"){ $("#dashboard").hidden=true;$(".hero").hidden=$("#auth").hidden=$("#products").hidden=$("#about").hidden=false;scrollTo({top:0,behavior:"smooth"});return}$(".hero").hidden=$("#auth").hidden=$("#products").hidden=$("#about").hidden=true;$("#dashboard").hidden=false;$("#orderPanel").hidden=k!=="orders";if(k==="wallet"){$("#wallet").hidden=false;$("#wallet").scrollIntoView({behavior:"smooth"})}else if(k==="orders")$("#orderPanel").scrollIntoView({behavior:"smooth"});else if(k==="profile")$(".profile").scrollIntoView({behavior:"smooth"});else scrollTo({top:0,behavior:"smooth"})});window.sb.auth.onAuthStateChange((event, session) => {
+;$$ ("[data-dock]").forEach(b=>b.onclick=()=>{let k=b.dataset.dock;$$ ("[data-dock]").forEach(x=>x.classList.toggle("active",x===b));if(k==="home"){ $("#dashboard").hidden=true;$(".hero").hidden=$("#auth").hidden=$("#products").hidden=$("#about").hidden=false;scrollTo({top:0,behavior:"smooth"});return}$(".hero").hidden=$("#auth").hidden=$("#products").hidden=$("#about").hidden=true;$("#dashboard").hidden=false;$("#orderPanel").hidden=k!=="orders";if(k==="wallet"){$("#wallet").hidden=false;$("#wallet").scrollIntoView({behavior:"smooth"})}else if(k==="orders")$("#orderPanel").scrollIntoView({behavior:"smooth"});else if(k==="profile")$(".profile").scrollIntoView({behavior:"smooth"});else scrollTo({top:0,behavior:"smooth"})});
+window.sb.auth.onAuthStateChange((event, session) => {
+  if (event === "SIGNED_OUT" || !session) {
+    user = null;
+    $("#dashboard").hidden = true;
+    $("#dock").hidden = true;
+    document.body.classList.remove("docked");
+
+    $(".hero").hidden = false;
+    $("#auth").hidden = false;
+    $("#products").hidden = false;
+    $("#about").hidden = false;
+    return;
+  }
+
   if (event === "INITIAL_SESSION" && session) {
     user = {
       id: session.user.id,
@@ -129,4 +143,6 @@ $("#logout").onclick = async () => {
     };
     openDash();
   }
-});$("#track").innerHTML+=$("#track").innerHTML;setInterval(time,60000)})();
+});
+
+  ;$("#track").innerHTML+=$("#track").innerHTML;setInterval(time,60000)})();
