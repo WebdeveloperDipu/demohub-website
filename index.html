@@ -1,17 +1,16 @@
 <!doctype html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f36b21"><title>Daraz Partner Bangladesh</title><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="ribbon">PROFESSIONAL SERVICE PLATFORM · LIVE TRANSACTIONS</div><header><a class="brand" href="#home"><span class="logo">D</span><span><b>Daraz Partner Bangladesh</b><small>Independent Service Platform · Secure Payment Services</small></span></a><button id="menu" class="menu">☰</button><nav id="nav"><a href="#products">পণ্য</a><a href="#about">আমাদের সম্পর্কে</a><button class="btn outline" data-auth="login">লগইন</button><button class="btn" data-auth="register">রেজিস্ট্রেশন</button></nav></header><main id="home"><section class="hero"><div><span class="eyebrow">E-COMMERCE DASHBOARD CONCEPT</span><h1>আপনার অনলাইন কাজের<br><em>স্মার্ট সার্ভিস কন্ট্রোল সেন্টার</em></h1><p>অনলাইন সার্ভিস পরিচালনা, অর্ডার ম্যানেজমেন্ট, অ্যাকাউন্ট কার্যক্রম পর্যবেক্ষণ এবং পেমেন্ট হিসাব যাচাই করার জন্য একটি সমন্বিত ডিজিটাল প্ল্যাটফর্ম।</p><button class="btn large" data-auth="register">শুরু করুন ↗</button> <a class="btn pale large" href="#products">পণ্য দেখুন</a><div class="chips"><span>✦ অর্ডার ম্যানেজমেন্ট</span><span>◈ Responsive</span><span>অ্যাকাউন্ট কার্যক্রম</span></div></div><div class="art"><div class="orbit"></div><div class="bag"><span>D</span></div><div class="cube"></div><div class="ball"></div><div class="float f1">✦ Smart tasks</div><div class="float f2">WORKSPACE</div></div></section><section class="section auth" id="auth"><div class="heading"><small>MEMBER ACCESS</small><h2>আপনার অ্যাকাউন্ট</h2><p>লগইন অথবা রেজিস্ট্রেশন নির্বাচন করুন</p></div><div class="auth-card"><div class="tabs"><button class="tab active" data-tab="login">লগইন</button><button class="tab" data-tab="register">রেজিস্ট্রেশন</button></div><div class="warning"><b>অ্যাকাউন্টে সাইন-ইন</b><span>আপনার অ্যাকাউন্টে প্রবেশ করুন এবং সার্ভিস ড্যাশবোর্ড পরিচালনা করুন।</span></div>
 <form id="loginForm">
-  <label for="phone">বাংলাদেশি মোবাইল নম্বর</label>
-  <input
-    id="phone"
-    name="phone"
-    type="tel"
-    inputmode="numeric"
-    autocomplete="tel-national"
-    placeholder="01XXXXXXXXX"
-    pattern="01[3-9][0-9]{8}"
-    maxlength="11"
-    required
-  >
+ 
+<label for="phone">ইমেইল ঠিকানা</label>
+<input
+  id="phone"
+  name="email"
+  type="email"
+  autocomplete="email"
+  placeholder="name@example.com"
+  required
+/>
+
 
   <label for="password">পাসওয়ার্ড</label>
   <input
@@ -39,18 +38,17 @@
     required
   >
 
-  <label for="registerPhone">বাংলাদেশি মোবাইল নম্বর</label>
-  <input
-    id="registerPhone"
-    name="phone"
-    type="tel"
-    inputmode="numeric"
-    autocomplete="tel-national"
-    placeholder="01XXXXXXXXX"
-    pattern="01[3-9][0-9]{8}"
-    maxlength="11"
-    required
-  >
+  
+<label for="registerPhone">ইমেইল ঠিকানা</label>
+<input
+  id="registerPhone"
+  name="email"
+  type="email"
+  autocomplete="email"
+  placeholder="name@example.com"
+  required
+/>
+
 
   <label for="registerPassword">পাসওয়ার্ড তৈরি করুন</label>
   <input
