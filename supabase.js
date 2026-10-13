@@ -1,6 +1,6 @@
 
-const SUPABASE_URL = "https://usnafrdealnkxcbhthts.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_fXuHEc0s0wHRzyiGmNnyzA_sJL3PPIb";
+const SUPABASE_URL ="https://usnafrdealnkxcbhthts.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY ="sb_publishable_fXuHEc0s0wHRzyiGmNnyzA_sJL3PPIb";
 
 window.sb = window.supabase.createClient(
   SUPABASE_URL,
