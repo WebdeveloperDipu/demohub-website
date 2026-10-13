@@ -1,11 +1,4 @@
 (()=>{"use strict";const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];let user=null,cat=1,balance=0,profit=0,done=new Set(),reports=[];const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3000)},bn=n=>Number(n||0).toLocaleString("bn-BD"),read=()=>{try{return JSON.parse(localStorage.getItem("dpbd_users")||"{}")}catch{return{}}},save=u=>localStorage.setItem("dpbd_users",JSON.stringify(u));const cats=Array.from({length:6},(_,i)=>({id:i+1,name:`টাস্ক ${i+1}`,tasks:Array.from({length:15},(_,j)=>({id:`${i+1}-${j+1}`,name:`নমুনা পণ্য টাস্ক ${j+1}`,reward:15,icon:["▣","◇","✦","◈","⬡","◎"][i]}))}));let enabled={};try{enabled=JSON.parse(localStorage.getItem("dpbd_enabled")||"{}")}catch{}function tab(t){$("#loginForm").hidden=t!=="login";$("#registerForm").hidden=t!=="register";$$("[data-tab]").forEach(b=>b.classList.toggle("active",b.dataset.tab===t))}$$("[data-tab]").forEach(b=>b.onclick=()=>tab(b.dataset.tab));$$("[data-auth]").forEach(b=>b.onclick=()=>{tab(b.dataset.auth);$("#auth").scrollIntoView({behavior:"smooth"})});$("#menu").onclick=()=>$("#nav").classList.toggle("open");
-function normalizeBDPhone(value) {
-  const phone = String(value || "").replace(/\D/g, "");
-  if (!/^01[3-9]\d{8}$/.test(phone)) {
-    throw new Error("সঠিক ১১ সংখ্যার বাংলাদেশি মোবাইল নম্বর দিন।");
-  }
-  return "+88" + phone;
-}
 
 $("#registerForm").onsubmit = async e => {
   e.preventDefault();
@@ -23,29 +16,31 @@ $("#registerForm").onsubmit = async e => {
     return toast("দুটি পাসওয়ার্ড মেলেনি।");
   }
 
-  try {
-    const phone = normalizeBDPhone(f.get("phone"));
-    const { data, error } = await window.sb.auth.signUp({
-      phone,
-      password,
-      options: {
-        data: { name }
-      }
-    });
+ 
+try {
+  const email = String(f.get("email") || "").trim().toLowerCase();
 
-    if (error) throw error;
-
-    if (!data.session) {
-      toast("অ্যাকাউন্টের অনুরোধ হয়েছে। Supabase ফোন কনফার্মেশন সেটিংস যাচাই করুন।");
-      return;
+  const { data, error } = await window.sb.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { name }
     }
+  });
 
-    e.target.reset();
-    toast("অ্যাকাউন্ট তৈরি হয়েছে। এখন লগইন করুন।");
-    tab("login");
-  } catch (err) {
-    toast(err.message || "রেজিস্ট্রেশন করা যায়নি।");
+  if (error) throw error;
+
+  if (!data.session) {
+    toast("আপনার ইমেইল যাচাই করুন, তারপর Login করুন।");
+    return;
   }
+
+  e.target.reset();
+  tab("login");
+  toast("Registration সফল হয়েছে। এখন Login করুন।");
+} catch (err) {
+  toast(err.message || "Registration করা যায়নি।");
+}
 };
 
 $("#loginForm").onsubmit = async e => {
@@ -53,26 +48,27 @@ $("#loginForm").onsubmit = async e => {
 
   const f = new FormData(e.target);
 
-  try {
-    const phone = normalizeBDPhone(f.get("phone"));
-    const password = String(f.get("password") || "");
+ 
+try {
+  const email = String(f.get("email") || "").trim().toLowerCase();
+  const password = String(f.get("password") || "");
 
-    const { data, error } = await window.sb.auth.signInWithPassword({
-      phone,
-      password
-    });
+  const { data, error } = await window.sb.auth.signInWithPassword({
+    email,
+    password
+  });
 
-    if (error) throw error;
+  if (error) throw error;
 
-    user = {
-      id: phone,
-      name: data.user.user_metadata?.name || "সদস্য"
-    };
+  user = {
+    id: data.user.id,
+    name: data.user.user_metadata?.name || "সদস্য"
+  };
 
-    openDash();
-  } catch (err) {
-    toast(err.message || "লগইন করা যায়নি। নম্বর ও পাসওয়ার্ড যাচাই করুন।");
-  }
+  openDash();
+} catch (err) {
+  toast(err.message || "Login করা যায়নি। ইমেইল ও পাসওয়ার্ড যাচাই করুন।");
+}
 };
 function openDash(){$(".hero").hidden=$("#auth").hidden=$("#products").hidden=$("#about").hidden=true;$("#dashboard").hidden=false;$("#dock").hidden=false;document.body.classList.add("docked");$("#dashName").textContent=$("#profileName").textContent=user.name;$("#profileId").textContent=user.id;$("#summaryUserId").textContent=user.id;$("#avatar").textContent=user.name[0].toUpperCase();time();renderCats();renderReports();renderAdmin();metrics();scrollTo({top:0,behavior:"smooth"});toast("ডেমো ড্যাশবোর্ড খোলা হয়েছে; বাস্তব লেনদেন নেই।")}function time(){let d=new Date();$("#bdtime").textContent="বাংলাদেশ সময়: "+d.toLocaleString("bn-BD",{timeZone:"Asia/Dhaka",dateStyle:"medium",timeStyle:"short"})}
 function metrics(){
